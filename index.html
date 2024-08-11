@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollutant Image Sliders</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+	
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            width: 36%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10px 6px 10px;
+            box-sizing: border-box;
+	    font-size: 34px;
+	    font-weight: bold;
+        }
+
+        footer {
+            width: 56%;
+            text-align: center;
+            padding: 4px 10px;
+            font-size: 12px;
+            background-color: #FFFFFF;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            box-sizing: border-box;
+        }
+
+	.additional-box {
+	    width: 56%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10px 6px 10px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            height: 50px;
+            margin: 0 20px;
+        }
+
+        .right-logo {
+            height: 80px;
+        }
+
+        .grey-box {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 8px auto;
+            width: 66%;
+            box-sizing: border-box;
+        }
+
+        .grey-box-content {
+            flex: 1;
+            padding-right: 20px;
+            max-width: 30%;
+            font-size: 14px;
+        }
+
+        .grey-box-content p {
+	    margin-top: 14px;
+            margin-bottom: 10px;
+     	    margin-right: 13px;
+            text-align: justify;
+        }
+
+        .highlight {
+            color: navy;
+            font-weight: bold;
+        }
+
+        .grey-box-image {
+	    margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 70%;
+        }
+	
+
+	.grey-box-pdf {
+    	    display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 70%;
+	}
+
+
+	
+	.grey-box-pdf iframe {
+   	   border: none;
+	   margin-top: 0px;
+           margin-bottom: 0px;
+     	   margin-right: 10px;
+	}
+
+        .link-box {
+            width: 220px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin: 6px 0;
+            display: inline-block;
+            background-color: #ffffff;
+        }
+
+        #pollutant-select {
+            width: 220px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-top: 6px;
+        }
+
+	#pdf-select {
+            width: 220px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-top: 6px;
+        }
+
+
+        .blue-text {
+            color: black;
+            font-weight: bold;
+        }
+
+	.Dblue-text {
+            color: navy;
+            font-weight: bold;
+
+        }
+
+        #slider-image {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .slider-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .slider-buttons button {
+            padding: 3px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        a.no-underline {
+            text-decoration: none;
+            color: navy;
+	    font-weight: bold;
+        }
+
+        .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 100%;
+            max-width: 100%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+@media (max-width: 1500px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+
+    .logo {
+        height: 50px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 65px;
+    }
+
+    header, footer, .grey-box, .additional-box {
+        width: 57%; /* Adjust the width for mobile view */
+    }
+
+    .additional-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10px 5px 5px;
+            box-sizing: border-box;
+        }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 20px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 10;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 180px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 180px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        padding: 1px 4px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 180px;
+        padding: 4px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+
+@media (max-width: 1400px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+
+    .logo {
+        height: 40px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 55px;
+    }
+
+    header, footer, .grey-box, .additional-box{
+        width: 65%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 20px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 6;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 160px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 160px;
+        padding: 5px;
+        font-size: 8px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 8px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 400px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 160px;
+        padding: 4px;
+        font-size: 8px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+@media (max-width: 1200px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+
+    .logo {
+        height: 40px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 55px;
+    }
+
+    header, footer, .grey-box, .additional-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 20px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 12px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 130px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 120px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 10px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 330px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 120px;
+        padding: 4px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+@media (max-width: 1100px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+
+    .logo {
+        height: 40px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 55px;
+    }
+
+    header, footer, .grey-box, .additional-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 40px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 12px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 130px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 120px;
+        padding: 5px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 10px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 400px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 120px;
+        padding: 4px;
+        font-size: 10px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+@media (max-width: 950px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 30px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 35px;
+    }
+
+    header, footer, .grey-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 10px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 10px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 90px;
+        padding: 5px;
+        font-size: 7px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 100px;
+        padding: 5px;
+        font-size: 8px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 7px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 100px;
+        padding: 4px;
+        font-size: 8px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+@media (max-width: 800px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 30px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 35px;
+    }
+
+    header, footer, .grey-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 7px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 8px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 85px;
+        padding: 5px;
+        font-size: 7px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 85px;
+        padding: 5px;
+        font-size: 7px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 7px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 85px;
+        padding: 4px;
+        font-size: 7px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+@media (max-width: 690px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 30px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 35px;
+    }
+
+    header, footer, .grey-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 7px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 6.5px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 80px;
+        padding: 3px;
+        font-size: 6px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 75px;
+        padding: 5px;
+        font-size: 5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 5px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 75px;
+        padding: 4px;
+        font-size: 5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+@media (max-width: 590px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 30px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 35px;
+    }
+
+    header, footer, .grey-box{
+        width: 75%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 7px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+
+    .grey-box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 10px;
+        font-size: 4.7px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+	margin-right: 10px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 60px;
+        padding: 2px;
+        font-size: 3.5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 60px;
+        padding: 2px;
+        font-size: 3.5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        margin-top: 10px;
+        padding: 1px 4px;
+        font-size: 5px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 100px;
+        height: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 60px;
+        padding: 2px;
+        font-size: 3.5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+@media (max-width: 450px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 20px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 25px;
+    }
+
+    header, footer, .grey-box {
+        width: 90%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 10px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 0 10px 10px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 2px;
+        font-size: 5px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 65px;
+        padding: 1px;
+        font-size: 5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 65px;
+        padding: 1px;
+        font-size: 5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        padding: 0.75px 2px;
+        font-size: 4px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 210px;
+        height: 180px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 65px;
+        padding: 1px;
+        font-size: 5.5px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+}
+
+
+@media (max-width: 380px) {
+
+    body {
+        /* background-color: red; */
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .additional-box {
+        display: none;
+    }
+
+    .logo {
+        height: 20px;
+        margin: 0 2px;
+    }
+
+    .right-logo {
+        height: 25px;
+    }
+
+    header, footer, .grey-box {
+        width: 90%; /* Adjust the width for mobile view */
+    }
+    
+    footer {
+        text-align: center;
+        padding: 2px;
+        font-size: 10px;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
+    .grey-box {
+        padding: 0 10px 10px;
+    }
+
+    .grey-box-content {
+        margin-top: 2px;
+        max-width: 30%;
+        padding-right: 2px;
+        font-size: 3.5px;
+    }
+
+    .grey-box-pdf {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .grey-box-image {
+        margin-top: 18px;
+        max-width: 70%;
+    }
+
+    .link-box {
+        width: 45px;
+        padding: 1px;
+        font-size: 4px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #ffffff;
+    }
+
+    #pollutant-select {
+        width: 45px;
+        padding: 1px;
+        font-size: 4px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    #slider-image {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .slider-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .slider-buttons button {
+        padding: 0.75px 2px;
+        font-size: 4px;
+        cursor: pointer;
+    }
+
+    .grey-box-pdf iframe {
+        border: none;
+        width: 210px;
+        height: 180px;
+        margin-top: 0;
+        margin-bottom: 2px;
+    }
+
+    #pdf-select {
+        width: 45px;
+        padding: 1px;
+        font-size: 4px;
+        border-radius: 1px;
+        border: 1px solid #ccc;
+        margin-top: 1px;
+    }
+
+    .fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .fullscreen-image {
+            max-height: 80%;
+            max-width: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-nav i {
+            font-size: 2em;
+            color: black;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .fullscreen-nav i:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+	
+        #fullscreen-pdf-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullscreen-pdf-container iframe {
+            width: 800px;
+            height: 900px;
+        }
+
+        #fullscreen-pdf-close {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            font-size: 44px;
+            color: white;
+            cursor: pointer;
+        }
+
+
+}
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+<div style="height: 2px;"></div>
+<header id="pdf-section1">
+    <p>WBGT Calculations for Villages</p>
+</header>
+
+<div class="grey-box">
+
+    <div class="grey-box-content">
+        <p>WBGT calculations have been completed for 30 villages over a span of 6 years (2010 to 2015).</p>
+
+<p><span class="highlight">The calculated WBGT results are summarized in three CSV files for each year. The first csv file is, <strong>"WBGT_Year_In_Range_Day.csv"</strong>, contains the number of hours when WBGT falls within specific ranges according to standard values. This data is provided at the daily level, covering all 365 days for each village.</span></p>
+
+<p>The second CSV file is the, <strong>"WBGT_Year_In_Range_Month.csv"</strong>, also contains the number of hours when WBGT falls within specific ranges, but it is aggregated at the monthly level. This file includes data for all 30 villages, with each village having 12 rows representing the months.</p>
+
+
+        <label for="pollutant-select" class="blue-text">Click here to select WBGT Village for its chart of its Data at Monthly level.<br></label>
+
+        <select id="pollutant-select">
+            <option value="Ainlatunga_2010">Select Village</option>
+            <option value="Ainlatunga_2010">Ainlatunga_2010</option>
+            <option value="Arap_2010">Arap_2010</option>
+            <option value="Aurepalle_2010">Aurepalle_2010</option>
+            <option value="Babrol_2010">Babrol_2010</option>
+            <option value="Belladamadugu_2010">Belladamadugu_2010</option>
+            <option value="Bhagakole_2010">Bhagakole_2010</option>
+            <option value="Bilaikani_2010">Bilaikani_2010</option>
+            <option value="Chandrasekharpur_2010">Chandrasekharpur_2010</option>
+            <option value="Chatha_2010">Chatha_2010</option>
+            <option value="Dokur_2010">Dokur_2010</option>
+            <option value="Dubaliya_2010">Dubaliya_2010</option>
+            <option value="Dumariya_2010">Dumariya_2010</option>
+            <option value="Durgapur_2010">Durgapur_2010</option>
+            <option value="Hesapiri_2010">Hesapiri_2010</option>
+            <option value="Inai_2010">Inai_2010</option>
+            <option value="JCAgraharam_2010">JCAgraharam_2010</option>
+            <option value="Kalman_2010">Kalman_2010</option>
+            <option value="Kanzara_2010">Kanzara_2010</option>
+            <option value="Kapanimbargi_2010">Kapanimbargi_2010</option>
+            <option value="Karamdichingariya_2010">Karamdichingariya_2010</option>
+            <option value="Kinkhed_2010">Kinkhed_2010</option>
+            <option value="Makhiyala_2010">Makhiyala_2010</option>
+            <option value="Markabbinahalli_2010">Markabbinahalli_2010</option>
+            <option value="Pamidipadu_2010">Pamidipadu_2010</option>
+            <option value="Papda_2010">Papda_2010</option>
+            <option value="RampurKalan_2010">RampurKalan_2010</option>
+            <option value="Shirapur_2010">Shirapur_2010</option>
+            <option value="Sogar_2010">Sogar_2010</option>
+            <option value="Susari_2010">Susari_2010</option>
+            <option value="Tharati_2010">Tharati_2010</option>
+        </select>
+
+    </div>
+
+    <div class="grey-box-image">
+        <img id="slider-image" src="images/WBGT_1.png" alt="Image 1">
+        <div class="slider-buttons">
+            <button id="prev-button">Previous</button>
+            <button id="next-button">Next</button>
+            <button id="fullscreen-button">Full Screen</button>
+        </div>
+    </div>
+
+
+    <!-- Full-screen view container (initially hidden) -->
+    <div id="fullscreen-container" class="fullscreen-container">
+        <span id="fullscreen-close" class="fullscreen-close">Close</span>
+        <img id="fullscreen-image" class="fullscreen-image" src="" alt="">
+        <div class="fullscreen-nav">
+            <i id="fullscreen-prev" class="fas fa-chevron-left"></i>
+            <i id="fullscreen-next" class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imagePaths = {
+    'Ainlatunga_2010': [
+        'images/Ainlatunga_2010/image1.png',
+        'images/Ainlatunga_2010/image2.png',
+        'images/Ainlatunga_2010/image3.png',
+        'images/Ainlatunga_2010/image4.png',
+        'images/Ainlatunga_2010/image5.png',
+        'images/Ainlatunga_2010/image6.png',
+        'images/Ainlatunga_2010/image7.png',
+        'images/Ainlatunga_2010/image8.png',
+        'images/Ainlatunga_2010/image9.png',
+        'images/Ainlatunga_2010/image10.png',
+        'images/Ainlatunga_2010/image11.png',
+        'images/Ainlatunga_2010/image12.png',
+    ],
+    'Arap_2010': [
+        'images/Arap_2010/image1.png',
+        'images/Arap_2010/image2.png',
+        'images/Arap_2010/image3.png',
+        'images/Arap_2010/image4.png',
+        'images/Arap_2010/image5.png',
+        'images/Arap_2010/image6.png',
+        'images/Arap_2010/image7.png',
+        'images/Arap_2010/image8.png',
+        'images/Arap_2010/image9.png',
+        'images/Arap_2010/image10.png',
+        'images/Arap_2010/image11.png',
+        'images/Arap_2010/image12.png',
+    ],
+    'Aurepalle_2010': [
+        'images/Aurepalle_2010/image1.png',
+        'images/Aurepalle_2010/image2.png',
+        'images/Aurepalle_2010/image3.png',
+        'images/Aurepalle_2010/image4.png',
+        'images/Aurepalle_2010/image5.png',
+        'images/Aurepalle_2010/image6.png',
+        'images/Aurepalle_2010/image7.png',
+        'images/Aurepalle_2010/image8.png',
+        'images/Aurepalle_2010/image9.png',
+        'images/Aurepalle_2010/image10.png',
+        'images/Aurepalle_2010/image11.png',
+        'images/Aurepalle_2010/image12.png',
+    ],
+    'Babrol_2010': [
+        'images/Babrol_2010/image1.png',
+        'images/Babrol_2010/image2.png',
+        'images/Babrol_2010/image3.png',
+        'images/Babrol_2010/image4.png',
+        'images/Babrol_2010/image5.png',
+        'images/Babrol_2010/image6.png',
+        'images/Babrol_2010/image7.png',
+        'images/Babrol_2010/image8.png',
+        'images/Babrol_2010/image9.png',
+        'images/Babrol_2010/image10.png',
+        'images/Babrol_2010/image11.png',
+        'images/Babrol_2010/image12.png',
+    ],
+    'Belladamadugu_2010': [
+        'images/Belladamadugu_2010/image1.png',
+        'images/Belladamadugu_2010/image2.png',
+        'images/Belladamadugu_2010/image3.png',
+        'images/Belladamadugu_2010/image4.png',
+        'images/Belladamadugu_2010/image5.png',
+        'images/Belladamadugu_2010/image6.png',
+        'images/Belladamadugu_2010/image7.png',
+        'images/Belladamadugu_2010/image8.png',
+        'images/Belladamadugu_2010/image9.png',
+        'images/Belladamadugu_2010/image10.png',
+        'images/Belladamadugu_2010/image11.png',
+        'images/Belladamadugu_2010/image12.png',
+    ],
+    'Bhagakole_2010': [
+        'images/Bhagakole_2010/image1.png',
+        'images/Bhagakole_2010/image2.png',
+        'images/Bhagakole_2010/image3.png',
+        'images/Bhagakole_2010/image4.png',
+        'images/Bhagakole_2010/image5.png',
+        'images/Bhagakole_2010/image6.png',
+        'images/Bhagakole_2010/image7.png',
+        'images/Bhagakole_2010/image8.png',
+        'images/Bhagakole_2010/image9.png',
+        'images/Bhagakole_2010/image10.png',
+        'images/Bhagakole_2010/image11.png',
+        'images/Bhagakole_2010/image12.png',
+    ],
+    'Bilaikani_2010': [
+        'images/Bilaikani_2010/image1.png',
+        'images/Bilaikani_2010/image2.png',
+        'images/Bilaikani_2010/image3.png',
+        'images/Bilaikani_2010/image4.png',
+        'images/Bilaikani_2010/image5.png',
+        'images/Bilaikani_2010/image6.png',
+        'images/Bilaikani_2010/image7.png',
+        'images/Bilaikani_2010/image8.png',
+        'images/Bilaikani_2010/image9.png',
+        'images/Bilaikani_2010/image10.png',
+        'images/Bilaikani_2010/image11.png',
+        'images/Bilaikani_2010/image12.png',
+    ],
+    'Chandrasekharpur_2010': [
+        'images/Chandrasekharpur_2010/image1.png',
+        'images/Chandrasekharpur_2010/image2.png',
+        'images/Chandrasekharpur_2010/image3.png',
+        'images/Chandrasekharpur_2010/image4.png',
+        'images/Chandrasekharpur_2010/image5.png',
+        'images/Chandrasekharpur_2010/image6.png',
+        'images/Chandrasekharpur_2010/image7.png',
+        'images/Chandrasekharpur_2010/image8.png',
+        'images/Chandrasekharpur_2010/image9.png',
+        'images/Chandrasekharpur_2010/image10.png',
+        'images/Chandrasekharpur_2010/image11.png',
+        'images/Chandrasekharpur_2010/image12.png',
+    ],
+    'Chatha_2010': [
+        'images/Chatha_2010/image1.png',
+        'images/Chatha_2010/image2.png',
+        'images/Chatha_2010/image3.png',
+        'images/Chatha_2010/image4.png',
+        'images/Chatha_2010/image5.png',
+        'images/Chatha_2010/image6.png',
+        'images/Chatha_2010/image7.png',
+        'images/Chatha_2010/image8.png',
+        'images/Chatha_2010/image9.png',
+        'images/Chatha_2010/image10.png',
+        'images/Chatha_2010/image11.png',
+        'images/Chatha_2010/image12.png',
+    ],
+    'Dokur_2010': [
+        'images/Dokur_2010/image1.png',
+        'images/Dokur_2010/image2.png',
+        'images/Dokur_2010/image3.png',
+        'images/Dokur_2010/image4.png',
+        'images/Dokur_2010/image5.png',
+        'images/Dokur_2010/image6.png',
+        'images/Dokur_2010/image7.png',
+        'images/Dokur_2010/image8.png',
+        'images/Dokur_2010/image9.png',
+        'images/Dokur_2010/image10.png',
+        'images/Dokur_2010/image11.png',
+        'images/Dokur_2010/image12.png',
+    ],
+    'Dubaliya_2010': [
+        'images/Dubaliya_2010/image1.png',
+        'images/Dubaliya_2010/image2.png',
+        'images/Dubaliya_2010/image3.png',
+        'images/Dubaliya_2010/image4.png',
+        'images/Dubaliya_2010/image5.png',
+        'images/Dubaliya_2010/image6.png',
+        'images/Dubaliya_2010/image7.png',
+        'images/Dubaliya_2010/image8.png',
+        'images/Dubaliya_2010/image9.png',
+        'images/Dubaliya_2010/image10.png',
+        'images/Dubaliya_2010/image11.png',
+        'images/Dubaliya_2010/image12.png',
+    ],
+    'Dumariya_2010': [
+        'images/Dumariya_2010/image1.png',
+        'images/Dumariya_2010/image2.png',
+        'images/Dumariya_2010/image3.png',
+        'images/Dumariya_2010/image4.png',
+        'images/Dumariya_2010/image5.png',
+        'images/Dumariya_2010/image6.png',
+        'images/Dumariya_2010/image7.png',
+        'images/Dumariya_2010/image8.png',
+        'images/Dumariya_2010/image9.png',
+        'images/Dumariya_2010/image10.png',
+        'images/Dumariya_2010/image11.png',
+        'images/Dumariya_2010/image12.png',
+    ],
+    'Durgapur_2010': [
+        'images/Durgapur_2010/image1.png',
+        'images/Durgapur_2010/image2.png',
+        'images/Durgapur_2010/image3.png',
+        'images/Durgapur_2010/image4.png',
+        'images/Durgapur_2010/image5.png',
+        'images/Durgapur_2010/image6.png',
+        'images/Durgapur_2010/image7.png',
+        'images/Durgapur_2010/image8.png',
+        'images/Durgapur_2010/image9.png',
+        'images/Durgapur_2010/image10.png',
+        'images/Durgapur_2010/image11.png',
+        'images/Durgapur_2010/image12.png',
+    ],
+    'Hesapiri_2010': [
+        'images/Hesapiri_2010/image1.png',
+        'images/Hesapiri_2010/image2.png',
+        'images/Hesapiri_2010/image3.png',
+        'images/Hesapiri_2010/image4.png',
+        'images/Hesapiri_2010/image5.png',
+        'images/Hesapiri_2010/image6.png',
+        'images/Hesapiri_2010/image7.png',
+        'images/Hesapiri_2010/image8.png',
+        'images/Hesapiri_2010/image9.png',
+        'images/Hesapiri_2010/image10.png',
+        'images/Hesapiri_2010/image11.png',
+        'images/Hesapiri_2010/image12.png',
+    ],
+    'Inai_2010': [
+        'images/Inai_2010/image1.png',
+        'images/Inai_2010/image2.png',
+        'images/Inai_2010/image3.png',
+        'images/Inai_2010/image4.png',
+        'images/Inai_2010/image5.png',
+        'images/Inai_2010/image6.png',
+        'images/Inai_2010/image7.png',
+        'images/Inai_2010/image8.png',
+        'images/Inai_2010/image9.png',
+        'images/Inai_2010/image10.png',
+        'images/Inai_2010/image11.png',
+        'images/Inai_2010/image12.png',
+    ],
+    'JCAgraharam_2010': [
+        'images/JCAgraharam_2010/image1.png',
+        'images/JCAgraharam_2010/image2.png',
+        'images/JCAgraharam_2010/image3.png',
+        'images/JCAgraharam_2010/image4.png',
+        'images/JCAgraharam_2010/image5.png',
+        'images/JCAgraharam_2010/image6.png',
+        'images/JCAgraharam_2010/image7.png',
+        'images/JCAgraharam_2010/image8.png',
+        'images/JCAgraharam_2010/image9.png',
+        'images/JCAgraharam_2010/image10.png',
+        'images/JCAgraharam_2010/image11.png',
+        'images/JCAgraharam_2010/image12.png',
+    ],
+    'Kalman_2010': [
+        'images/Kalman_2010/image1.png',
+        'images/Kalman_2010/image2.png',
+        'images/Kalman_2010/image3.png',
+        'images/Kalman_2010/image4.png',
+        'images/Kalman_2010/image5.png',
+        'images/Kalman_2010/image6.png',
+        'images/Kalman_2010/image7.png',
+        'images/Kalman_2010/image8.png',
+        'images/Kalman_2010/image9.png',
+        'images/Kalman_2010/image10.png',
+        'images/Kalman_2010/image11.png',
+        'images/Kalman_2010/image12.png',
+    ],
+    'Kanzara_2010': [
+        'images/Kanzara_2010/image1.png',
+        'images/Kanzara_2010/image2.png',
+        'images/Kanzara_2010/image3.png',
+        'images/Kanzara_2010/image4.png',
+        'images/Kanzara_2010/image5.png',
+        'images/Kanzara_2010/image6.png',
+        'images/Kanzara_2010/image7.png',
+        'images/Kanzara_2010/image8.png',
+        'images/Kanzara_2010/image9.png',
+        'images/Kanzara_2010/image10.png',
+        'images/Kanzara_2010/image11.png',
+        'images/Kanzara_2010/image12.png',
+    ],
+    'Kapanimbargi_2010': [
+        'images/Kapanimbargi_2010/image1.png',
+        'images/Kapanimbargi_2010/image2.png',
+        'images/Kapanimbargi_2010/image3.png',
+        'images/Kapanimbargi_2010/image4.png',
+        'images/Kapanimbargi_2010/image5.png',
+        'images/Kapanimbargi_2010/image6.png',
+        'images/Kapanimbargi_2010/image7.png',
+        'images/Kapanimbargi_2010/image8.png',
+        'images/Kapanimbargi_2010/image9.png',
+        'images/Kapanimbargi_2010/image10.png',
+        'images/Kapanimbargi_2010/image11.png',
+        'images/Kapanimbargi_2010/image12.png',
+    ],
+    'Karamdichingariya_2010': [
+        'images/Karamdichingariya_2010/image1.png',
+        'images/Karamdichingariya_2010/image2.png',
+        'images/Karamdichingariya_2010/image3.png',
+        'images/Karamdichingariya_2010/image4.png',
+        'images/Karamdichingariya_2010/image5.png',
+        'images/Karamdichingariya_2010/image6.png',
+        'images/Karamdichingariya_2010/image7.png',
+        'images/Karamdichingariya_2010/image8.png',
+        'images/Karamdichingariya_2010/image9.png',
+        'images/Karamdichingariya_2010/image10.png',
+        'images/Karamdichingariya_2010/image11.png',
+        'images/Karamdichingariya_2010/image12.png',
+    ],
+    'Kinkhed_2010': [
+        'images/Kinkhed_2010/image1.png',
+        'images/Kinkhed_2010/image2.png',
+        'images/Kinkhed_2010/image3.png',
+        'images/Kinkhed_2010/image4.png',
+        'images/Kinkhed_2010/image5.png',
+        'images/Kinkhed_2010/image6.png',
+        'images/Kinkhed_2010/image7.png',
+        'images/Kinkhed_2010/image8.png',
+        'images/Kinkhed_2010/image9.png',
+        'images/Kinkhed_2010/image10.png',
+        'images/Kinkhed_2010/image11.png',
+        'images/Kinkhed_2010/image12.png',
+    ],
+    'Makhiyala_2010': [
+        'images/Makhiyala_2010/image1.png',
+        'images/Makhiyala_2010/image2.png',
+        'images/Makhiyala_2010/image3.png',
+        'images/Makhiyala_2010/image4.png',
+        'images/Makhiyala_2010/image5.png',
+        'images/Makhiyala_2010/image6.png',
+        'images/Makhiyala_2010/image7.png',
+        'images/Makhiyala_2010/image8.png',
+        'images/Makhiyala_2010/image9.png',
+        'images/Makhiyala_2010/image10.png',
+        'images/Makhiyala_2010/image11.png',
+        'images/Makhiyala_2010/image12.png',
+    ],
+    'Markabbinahalli_2010': [
+        'images/Markabbinahalli_2010/image1.png',
+        'images/Markabbinahalli_2010/image2.png',
+        'images/Markabbinahalli_2010/image3.png',
+        'images/Markabbinahalli_2010/image4.png',
+        'images/Markabbinahalli_2010/image5.png',
+        'images/Markabbinahalli_2010/image6.png',
+        'images/Markabbinahalli_2010/image7.png',
+        'images/Markabbinahalli_2010/image8.png',
+        'images/Markabbinahalli_2010/image9.png',
+        'images/Markabbinahalli_2010/image10.png',
+        'images/Markabbinahalli_2010/image11.png',
+        'images/Markabbinahalli_2010/image12.png',
+    ],
+    'Pamidipadu_2010': [
+        'images/Pamidipadu_2010/image1.png',
+        'images/Pamidipadu_2010/image2.png',
+        'images/Pamidipadu_2010/image3.png',
+        'images/Pamidipadu_2010/image4.png',
+        'images/Pamidipadu_2010/image5.png',
+        'images/Pamidipadu_2010/image6.png',
+        'images/Pamidipadu_2010/image7.png',
+        'images/Pamidipadu_2010/image8.png',
+        'images/Pamidipadu_2010/image9.png',
+        'images/Pamidipadu_2010/image10.png',
+        'images/Pamidipadu_2010/image11.png',
+        'images/Pamidipadu_2010/image12.png',
+    ],
+    'Papda_2010': [
+        'images/Papda_2010/image1.png',
+        'images/Papda_2010/image2.png',
+        'images/Papda_2010/image3.png',
+        'images/Papda_2010/image4.png',
+        'images/Papda_2010/image5.png',
+        'images/Papda_2010/image6.png',
+        'images/Papda_2010/image7.png',
+        'images/Papda_2010/image8.png',
+        'images/Papda_2010/image9.png',
+        'images/Papda_2010/image10.png',
+        'images/Papda_2010/image11.png',
+        'images/Papda_2010/image12.png',
+    ],
+    'RampurKalan_2010': [
+        'images/RampurKalan_2010/image1.png',
+        'images/RampurKalan_2010/image2.png',
+        'images/RampurKalan_2010/image3.png',
+        'images/RampurKalan_2010/image4.png',
+        'images/RampurKalan_2010/image5.png',
+        'images/RampurKalan_2010/image6.png',
+        'images/RampurKalan_2010/image7.png',
+        'images/RampurKalan_2010/image8.png',
+        'images/RampurKalan_2010/image9.png',
+        'images/RampurKalan_2010/image10.png',
+        'images/RampurKalan_2010/image11.png',
+        'images/RampurKalan_2010/image12.png',
+    ],
+    'Shirapur_2010': [
+        'images/Shirapur_2010/image1.png',
+        'images/Shirapur_2010/image2.png',
+        'images/Shirapur_2010/image3.png',
+        'images/Shirapur_2010/image4.png',
+        'images/Shirapur_2010/image5.png',
+        'images/Shirapur_2010/image6.png',
+        'images/Shirapur_2010/image7.png',
+        'images/Shirapur_2010/image8.png',
+        'images/Shirapur_2010/image9.png',
+        'images/Shirapur_2010/image10.png',
+        'images/Shirapur_2010/image11.png',
+        'images/Shirapur_2010/image12.png',
+    ],
+    'Sogar_2010': [
+        'images/Sogar_2010/image1.png',
+        'images/Sogar_2010/image2.png',
+        'images/Sogar_2010/image3.png',
+        'images/Sogar_2010/image4.png',
+        'images/Sogar_2010/image5.png',
+        'images/Sogar_2010/image6.png',
+        'images/Sogar_2010/image7.png',
+        'images/Sogar_2010/image8.png',
+        'images/Sogar_2010/image9.png',
+        'images/Sogar_2010/image10.png',
+        'images/Sogar_2010/image11.png',
+        'images/Sogar_2010/image12.png',
+    ],
+    'Susari_2010': [
+        'images/Susari_2010/image1.png',
+        'images/Susari_2010/image2.png',
+        'images/Susari_2010/image3.png',
+        'images/Susari_2010/image4.png',
+        'images/Susari_2010/image5.png',
+        'images/Susari_2010/image6.png',
+        'images/Susari_2010/image7.png',
+        'images/Susari_2010/image8.png',
+        'images/Susari_2010/image9.png',
+        'images/Susari_2010/image10.png',
+        'images/Susari_2010/image11.png',
+        'images/Susari_2010/image12.png',
+    ],
+    'Tharati_2010': [
+        'images/Tharati_2010/image1.png',
+        'images/Tharati_2010/image2.png',
+        'images/Tharati_2010/image3.png',
+        'images/Tharati_2010/image4.png',
+        'images/Tharati_2010/image5.png',
+        'images/Tharati_2010/image6.png',
+        'images/Tharati_2010/image7.png',
+        'images/Tharati_2010/image8.png',
+        'images/Tharati_2010/image9.png',
+        'images/Tharati_2010/image10.png',
+        'images/Tharati_2010/image11.png',
+        'images/Tharati_2010/image12.png',
+    ],
+};
+
+    let index = 0;
+    let currentPollutant = 'Ainlatunga_2010';
+    const sliderImage = document.getElementById('slider-image');
+    const nextButton = document.getElementById('next-button');
+    const prevButton = document.getElementById('prev-button');
+    const pollutantSelect = document.getElementById('pollutant-select');
+    const fullscreenButton = document.getElementById('fullscreen-button');
+    const fullscreenContainer = document.getElementById('fullscreen-container');
+    const fullscreenImage = document.getElementById('fullscreen-image');
+    const fullscreenPrev = document.getElementById('fullscreen-prev');
+    const fullscreenNext = document.getElementById('fullscreen-next');
+    const fullscreenClose = document.getElementById('fullscreen-close');
+
+    function updateImage() {
+        sliderImage.src = imagePaths[currentPollutant][index];
+    }
+
+    function updateFullscreenImage() {
+        fullscreenImage.src = imagePaths[currentPollutant][index];
+    }
+
+    nextButton.addEventListener('click', function() {
+        index = (index + 1) % imagePaths[currentPollutant].length;
+        updateImage();
+    });
+
+    prevButton.addEventListener('click', function() {
+        index = (index - 1 + imagePaths[currentPollutant].length) % imagePaths[currentPollutant].length;
+        updateImage();
+    });
+
+    fullscreenButton.addEventListener('click', function() {
+        fullscreenContainer.style.display = 'flex';
+        updateFullscreenImage();
+    });
+
+    fullscreenClose.addEventListener('click', function() {
+        fullscreenContainer.style.display = 'none';
+    });
+
+    fullscreenPrev.addEventListener('click', function() {
+        index = (index - 1 + imagePaths[currentPollutant].length) % imagePaths[currentPollutant].length;
+        updateFullscreenImage();
+    });
+
+    fullscreenNext.addEventListener('click', function() {
+        index = (index + 1) % imagePaths[currentPollutant].length;
+        updateFullscreenImage();
+    });
+
+    pollutantSelect.addEventListener('change', function(event) {
+        currentPollutant = event.target.value;
+        index = 0;
+        updateImage();
+    });
+
+    // Initial image load
+    updateImage();
+
+    // Keyboard controls for fullscreen mode
+    document.addEventListener('keydown', function(event) {
+        if (fullscreenContainer.style.display === 'flex') {
+            if (event.key === 'ArrowRight') {
+                index = (index + 1) % imagePaths[currentPollutant].length;
+                updateFullscreenImage();
+            } else if (event.key === 'ArrowLeft') {
+                index = (index - 1 + imagePaths[currentPollutant].length) % imagePaths[currentPollutant].length;
+                updateFullscreenImage();
+            } else if (event.key === 'Escape') {
+                fullscreenContainer.style.display = 'none';
+            }
+        }
+    });
+
+    // PDF viewer functionality
+    const pdfViewer = document.getElementById('pdf-viewer');
+    const pdfSelect = document.getElementById('pdf-select');
+
+    // Get the first PDF option
+    const firstPdfOption = pdfSelect.options[1]; // Index 1 for the first option
+
+    // Set the default PDF and display it
+    pdfSelect.value = firstPdfOption.value;
+    pdfViewer.src = firstPdfOption.value + '#toolbar=0';
+    pdfViewer.style.display = 'block';
+
+    pdfSelect.addEventListener('change', function() {
+        const selectedPdf = pdfSelect.value;
+        if (selectedPdf) {
+            pdfViewer.src = selectedPdf + '#toolbar=0';
+            pdfViewer.style.display = 'block';
+        } else {
+            pdfViewer.style.display = 'none';
+        }
+    });
+
+
+    const fullscreenPdfButton = document.getElementById('fullscreen-pdf-button');
+    const fullscreenPdfContainer = document.createElement('div');
+    fullscreenPdfContainer.id = 'fullscreen-pdf-container';
+    fullscreenPdfContainer.innerHTML = `
+        <iframe id="fullscreen-pdf-viewer" src="" frameborder="0"></iframe>
+        <span id="fullscreen-pdf-close">&times;</span>
+    `;
+    document.body.appendChild(fullscreenPdfContainer);
+
+    fullscreenPdfButton.addEventListener('click', function() {
+        const pdfViewerSrc = document.getElementById('pdf-viewer').src;
+        document.getElementById('fullscreen-pdf-viewer').src = pdfViewerSrc;
+        fullscreenPdfContainer.style.display = 'flex';
+    });
+
+    document.getElementById('fullscreen-pdf-close').addEventListener('click', function() {
+        fullscreenPdfContainer.style.display = 'none';
+    });
+
+
+
+
+    // Remove the PDF header
+    const pdfEmbed = pdfViewer.querySelector('embed');
+    if (pdfEmbed) {
+        pdfEmbed.removeAttribute('toolbar');
+    }
+
+    document.getElementById('open-pdf').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    const pdfViewer = document.getElementById('pdf-viewer');
+    pdfViewer.src = 'JJM_Data_Python_Code.pdf#toolbar=0'; // Set the iframe source to the PDF file
+});
+});
+
+</script>
+
+<footer>
+	<br>
+	<br>
+</footer>
+
+</body>
+</html>
